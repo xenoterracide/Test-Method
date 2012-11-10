@@ -47,3 +47,7 @@ sub func_is {
 =head1 SYNOPSIS
 
 	use Test::SubRoutine;
+
+	my $obj = Class->new; # blessed reference
+
+	method_is( $obj, 'method', undef, 'value' ); # Class->method( undef )
