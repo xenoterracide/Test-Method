@@ -6,7 +6,7 @@ use Test::Subroutine 'method_is';
 
 {
 	package Test;
-	
+
 	sub new {
 		my $class = shift;
 		return bless {}, $class;
