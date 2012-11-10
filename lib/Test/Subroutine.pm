@@ -49,3 +49,10 @@ sub method_is { ## no critic ( ArgUnpacking )
 	my $obj = Class->new; # blessed reference
 
 	method_is( $obj, 'method', undef, 'value' ); # Class->method( undef )
+
+=func method_is
+
+	my $bool = method_is( [ $cmp ], $obj, $method, $args, $want, [ $name ] );
+
+C<method_is> allows you to check the return value of an object method using an
+optional comparator. C<is> is the default comparator.
