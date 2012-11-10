@@ -10,15 +10,17 @@ use Scalar::Util 'blessed';
 use Test::Builder;
 use Test::More;
 
-our @EXPORT = ( qw( method_is func_is ) );
+our @EXPORT ## no critic ( AutomaticExportation )
+	= ( qw( method_is func_is ) );
 
 my $test = Test::Builder->new;
 
-sub method_is {
-	unshift @_, \&is unless ref $_[0] eq 'CODE';
+sub method_is { ## no critic ( ArgUnpacking )
+	unshift @_, \&is unless defined $_[0] && ref $_[0] && ref $_[0] eq 'CODE';
 	my ( $cmp, $obj, $method, $args, $want, $name ) = @_;
 
-	local $Test::Builder::Level = $Test::Builder::Level + 1;
+	local $Test::Builder::Level      ## no critic ( PackageVars )
+		= $Test::Builder::Level + 1; ## no critic ( PackageVars )
 
 	my $arg_val_name
 		= ! defined $args          ? 'undef'
@@ -34,10 +36,6 @@ sub method_is {
 	my $ret = $cmp->( $obj->$method( @$args ), $want, $name );
 
 	return $ret;
-}
-
-sub func_is {
-	unshift @_, \&is unless ref $_[0] eq 'CODE';
 }
 
 1;
