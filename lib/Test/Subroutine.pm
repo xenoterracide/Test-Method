@@ -46,7 +46,7 @@ sub func_is {
 
 =head1 SYNOPSIS
 
-	use Test::SubRoutine;
+	use Test::Subroutine;
 
 	my $obj = Class->new; # blessed reference
 
