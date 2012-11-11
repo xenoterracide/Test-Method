@@ -33,5 +33,3 @@ check_test(
 );
 
 ok $ret, 'method_is';
-
-done_testing;
