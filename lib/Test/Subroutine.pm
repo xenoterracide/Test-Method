@@ -60,7 +60,7 @@ sub func_is { ## no critic ( ArgUnpacking )
 
 	my $ret;
 	{
-		no strict 'refs';
+		no strict 'refs'; ## no critic ( NoStrict )
 		$ret = $cmp->( &$function( @$args ), $want, $name );
 	}
 
