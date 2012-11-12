@@ -29,7 +29,7 @@ check_test(
 		name => q[Test->method( undef )],
 		diag => '',
 	},
-	'method ok'
+	'method_is'
 );
 
-ok $ret, 'method_is';
+ok $ret, 'method_is return';
