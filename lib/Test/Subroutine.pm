@@ -38,10 +38,13 @@ sub method_is { ## no critic ( ArgUnpacking )
 	local $Test::Builder::Level      ## no critic ( PackageVars )
 		= $Test::Builder::Level + 1; ## no critic ( PackageVars )
 
+	_get_args_name( $args );
 
-	my $arg_val_name = _get_args_name( $args );
-
-	$name ||= blessed( $obj ) . '->' . $method . '( ' . $arg_val_name . ' )';
+	$name ||= blessed( $obj )
+		. '->' . $method . '( '
+		. _get_args_name( $args )
+		. ' )'
+		;
 
 	my $ret = $cmp->( $obj->$method( @$args ), $want, $name );
 
