@@ -2,6 +2,7 @@ use strict;
 use warnings;
 use Test::Tester tests => 7;
 use Test::More;
+use Test::Deep;
 use Test::Method;
 
 {
@@ -21,7 +22,7 @@ my $obj = Test->new;
 
 check_test(
 	sub {
-		method_ok( $obj, 'method', undef, 'true' );
+		method_ok( $obj, 'method', undef, re('^t'));
 	},
 	{
 		ok   => 1,

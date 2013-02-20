@@ -21,17 +21,13 @@ our @EXPORT ## no critic ( AutomaticExportation )
 
 sub method_ok { ## no critic ( ArgUnpacking )
 	# first 2 args
-	my ( $obj, $method ) = ( shift, shift );
+	my ( $obj, $method, $args, $want, $name ) = @_;
 
-	my $args;
 	my $params = [ $method ];
-	if ( defined $_[0] && ref $_[0] ) {
-		croak 'method args must be an arrayref' unless ref $_[0] eq 'ARRAY';
 
-		$args = shift;
-		push @{ $params }, @{$args};
+	if ( defined $args && ref $args eq 'ARRAY' ) {
+		push @{ $params }, @{ $args };
 	}
-	my ( $want, $name ) = ( shift, shift );
 
 	$name ||= blessed( $obj )
 		. '->' . $method . '( '
@@ -68,7 +64,7 @@ sub _get_args_name {
 
 	my $obj = Class->new; # blessed reference
 
-	method_ok( $obj, 'method', 'value' ); # Class->method()
+	method_ok( $obj, 'method', [] 'value' ); # Class->method()
 
 	method_ok( $obj, 'method', ['arg1', 'arg2'], 'expected', 'testname' );
 
