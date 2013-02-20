@@ -26,7 +26,7 @@ check_test(
 	},
 	{
 		ok   => 1,
-		name => q[Test->method( "foo" ) is "foo"],
+		name => q[Test->method("foo") is "foo"],
 		diag => '',
 	},
 	'method_ok'

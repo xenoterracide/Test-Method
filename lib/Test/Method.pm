@@ -30,9 +30,9 @@ sub method_ok { ## no critic ( ArgUnpacking )
 	}
 
 	$name ||= blessed( $obj )
-		. '->' . $method . '( '
+		. '->' . $method . '('
 		. _get_printable_value( $args )
-		. ' ) is '
+		. ') is '
 		. _get_printable_value( $want )
 		;
 
@@ -49,10 +49,13 @@ sub method_ok { ## no critic ( ArgUnpacking )
 sub _get_printable_value {
 	my ( $args ) = @_;
 
-	return 'undef' unless defined $args;
+	return '' unless defined $args;
 	if ( ref $args && ref $args eq 'ARRAY' ) {
 		if ( scalar @{ $args } > 1 ) {
 			return '...';
+		}
+		if ( scalar @{ $args } == 1 && ! defined @{ $args }[0] ) {
+			return 'undef';
 		}
 		return &_get_printable_value( @{$args}[0] );
 	}

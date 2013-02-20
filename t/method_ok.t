@@ -25,7 +25,7 @@ check_test(
 	},
 	{
 		ok   => 1,
-		name => q[Test->method( undef ) is "true"],
+		name => q[Test->method() is "true"],
 		diag => '',
 	},
 	'method_ok'

@@ -25,7 +25,7 @@ check_test(
 	},
 	{
 		ok   => 0,
-		name => q[Test->method( undef ) is "false"],
+		name => q[Test->method() is "false"],
 		diag => 'Compared $data->method'
 			. "\n   got : 'true'"
 			. "\nexpect : 'false'",
