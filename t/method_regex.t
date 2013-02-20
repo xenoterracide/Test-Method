@@ -26,7 +26,7 @@ check_test(
 	},
 	{
 		ok   => 1,
-		name => q[Test->method( undef )],
+		name => q[Test->method( undef ) is "Test::Deep::Regexp"],
 		diag => '',
 	},
 	'method_ok'
