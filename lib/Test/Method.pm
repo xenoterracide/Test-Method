@@ -32,9 +32,8 @@ sub method_ok { ## no critic ( ArgUnpacking )
 	$name ||= blessed( $obj )
 		. '->' . $method . '( '
 		. _get_printable_value( $args )
-		. ' ) is "'
+		. ' ) is '
 		. _get_printable_value( $want )
-		. '"'
 		;
 
 	my ( $ok, $stack ) = cmp_details( $obj, methods( $params, $want ) );
@@ -48,7 +47,7 @@ sub method_ok { ## no critic ( ArgUnpacking )
 }
 
 sub _get_printable_value {
-	my $args = shift;
+	my ( $args ) = @_;
 
 	return 'undef' unless defined $args;
 	if ( ref $args && ref $args eq 'ARRAY' ) {
@@ -59,7 +58,7 @@ sub _get_printable_value {
 	}
 	return ref $args if ref $args;
 
-	return $args;
+	return '"' . $args . '"';
 }
 
 1;
