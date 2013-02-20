@@ -1,4 +1,4 @@
-package Test::Subroutine;
+package Test::Method;
 use 5.006;
 use strict;
 use warnings;

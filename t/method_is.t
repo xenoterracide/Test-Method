@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::Tester tests => 7;
 use Test::More;
-use Test::Subroutine;
+use Test::Method;
 
 {
 	package Test;
