@@ -1,8 +1,8 @@
 use strict;
 use warnings;
-use Test::Tester tests => 8;
+use Test::Tester tests => 7;
 use Test::More;
-use Test::Subroutine 'method_is';
+use Test::Subroutine;
 
 {
 	package Test;
@@ -19,17 +19,14 @@ use Test::Subroutine 'method_is';
 
 my $obj = Test->new;
 
-my $ret;
 check_test(
 	sub {
-		$ret = method_is( $obj, 'method', undef, 'true' );
+		method_ok( $obj, 'method', 'true' );
 	},
 	{
 		ok   => 1,
 		name => q[Test->method( undef )],
 		diag => '',
 	},
-	'method_is'
+	'method_ok'
 );
-
-ok $ret, 'method_is return';

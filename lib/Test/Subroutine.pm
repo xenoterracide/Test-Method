@@ -7,38 +7,31 @@ use warnings;
 
 use parent 'Exporter';
 use Scalar::Util 'blessed';
+use Carp;
 use Test::Builder;
+use Test::Deep::NoTest qw(
+	cmp_details
+	methods
+	deep_diag
+);
 use Test::More;
 
 our @EXPORT ## no critic ( AutomaticExportation )
-	= ( qw( method_is func_is ) );
+	= ( qw( method_ok ) );
 
-my $test = Test::Builder->new;
+sub method_ok { ## no critic ( ArgUnpacking )
+	# first 2 args
+	my ( $obj, $method ) = ( shift, shift );
 
-sub _get_args_name {
-	my $args = shift;
+	my $args;
+	my $params = [ $method ];
+	if ( defined $_[0] && ref $_[0] ) {
+		croak 'method args must be an arrayref' unless ref $_[0] eq 'ARRAY';
 
-	return ! defined $args          ? 'undef'
-		: ref $args # put value of scalar
-			&& ref $args eq 'ARRAY'
-			&& scalar @$args == 1
-			&& ! ref @{ $args }[0] ? @{ $args }[0]
-		: ref $args # put value of ref
-			&& ref $args eq 'ARRAY'
-			&& scalar @$args == 1
-			&& ref @{ $args }[0]   ? ref @{ $args }[0]
-		:                            '...'
-		;
-}
-
-sub method_is { ## no critic ( ArgUnpacking )
-	unshift @_, \&is unless defined $_[0] && ref $_[0] && ref $_[0] eq 'CODE';
-	my ( $cmp, $obj, $method, $args, $want, $name ) = @_;
-
-	local $Test::Builder::Level      ## no critic ( PackageVars )
-		= $Test::Builder::Level + 1; ## no critic ( PackageVars )
-
-	_get_args_name( $args );
+		$args = shift;
+		push @{ $params }, @{$args};
+	}
+	my ( $want, $name ) = ( shift, shift );
 
 	$name ||= blessed( $obj )
 		. '->' . $method . '( '
@@ -46,55 +39,42 @@ sub method_is { ## no critic ( ArgUnpacking )
 		. ' )'
 		;
 
-	my $ret = $cmp->( $obj->$method( @$args ), $want, $name );
+	my ( $ok, $stack ) = cmp_details( $obj, methods( $params, $want ) );
 
-	return $ret;
+	my $test = Test::Builder->new;
+	unless ( $test->ok( $ok, $name ) ) {
+		my $diag = deep_diag( $stack );
+		$test->diag( $diag );
+	}
+	return;
 }
 
-sub func_is { ## no critic ( ArgUnpacking )
-	unshift @_, \&is unless defined $_[0] && ref $_[0] && ref $_[0] eq 'CODE';
-	my ( $cmp, $package, $func, $args, $want, $name ) = @_;
+sub _get_args_name {
+	my $args = shift;
 
-	local $Test::Builder::Level      ## no critic ( PackageVars )
-		= $Test::Builder::Level + 1; ## no critic ( PackageVars )
-
-	my $function = $package . '::' . $func;
-	$name ||= $function . '( ' . _get_args_name( $args ) . ' )';
-
-	my $ret;
-	{
-		no strict 'refs'; ## no critic ( NoStrict )
-		$ret = $cmp->( &$function( @$args ), $want, $name );
-	}
-
-	return $ret;
+	return 'undef' unless defined $args;
+	return '...'   if scalar @{ $args } > 1;
+	return ref @{$args}[0] if ref @{$args}[0];
+	return @{$args}[0];
 }
 
 1;
 
-# ABSTRACT: test sugar for methods and functions
+# ABSTRACT: test sugar for methods
 
 =head1 SYNOPSIS
 
-	use Test::Subroutine;
+	use Test::Method;
 
-	my $pkg = 'Foo::Bar';
 	my $obj = Class->new; # blessed reference
 
-	method_is( $obj, 'method', undef, 'value' ); # Class->method( undef )
+	method_ok( $obj, 'method', 'value' ); # Class->method()
 
-	func_is( $pkg, 'func', undef, 'value' ); # Foo::Bar::func( undef )
+	method_ok( $obj, 'method', ['arg1', 'arg2'], 'expected', 'testname' );
 
 =func method_is
 
 	my $bool = method_is( [ \&cmp ], $obj, $method, \@args, $want, [ $name ] );
 
 C<method_is> allows you to check the return value of an object method using an
-optional comparator. C<is> is the default comparator.
-
-=func func_is
-
-	my $bool = func_is( [ \&cmp ], $pkg, $func, \@$args, $want, [ $name ] );
-
-C<func_is> allows you to check the return value of a function using an
 optional comparator. C<is> is the default comparator.
