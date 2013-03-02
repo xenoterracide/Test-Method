@@ -77,10 +77,3 @@ sub _get_printable_value {
 	method_ok( $obj, 'method', [] 'value' ); # Class->method()
 
 	method_ok( $obj, 'method', ['arg1', 'arg2'], 'expected', 'testname' );
-
-=func method_is
-
-	my $bool = method_is( [ \&cmp ], $obj, $method, \@args, $want, [ $name ] );
-
-C<method_is> allows you to check the return value of an object method using an
-optional comparator. C<is> is the default comparator.
