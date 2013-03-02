@@ -7,14 +7,12 @@ use warnings;
 
 use parent 'Exporter';
 use Scalar::Util 'blessed';
-use Carp;
 use Test::Builder;
 use Test::Deep::NoTest qw(
 	cmp_details
 	methods
 	deep_diag
 );
-use Test::More;
 
 our @EXPORT ## no critic ( AutomaticExportation )
 	= ( qw( method_ok ) );
