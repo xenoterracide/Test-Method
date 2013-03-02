@@ -84,6 +84,10 @@ sub _get_printable_value {
 	method_ok( $obj, 'method', ['arg1', 'arg2'], 'expected', 'testname' );
 	# testname Class->method(...) is 'expected'
 
+	use Test::Deep;
+	method_ok( $obj, 'method', [], re('^foo'), );
+	# Test->method() is Test::Deep::Regexp
+
 =head1 DESCRIPTION
 
 The reason for creating L<Test::Method> is to provide an easy way of testing
