@@ -71,6 +71,7 @@ sub _get_printable_value {
 
 =head1 SYNOPSIS
 
+	use Test::More;
 	use Test::Method;
 
 	my $obj = Class->new; # blessed reference
@@ -85,6 +86,8 @@ sub _get_printable_value {
 	use Test::Deep;
 	method_ok( $obj, 'method', [], re('^foo'), );
 	# Test->method() is Test::Deep::Regexp
+
+	done_testing;
 
 =head1 DESCRIPTION
 
