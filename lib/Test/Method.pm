@@ -29,7 +29,10 @@ sub method_ok { ## no critic ( ArgUnpacking )
 		push @{ $params }, @{ $args };
 	}
 
-	$name ||= blessed( $obj )
+	# padding
+	$name .= ' ' if defined $name;
+
+	$name .= blessed( $obj )
 		. '->' . $method . '('
 		. _get_printable_value( $args )
 		. ') is '
