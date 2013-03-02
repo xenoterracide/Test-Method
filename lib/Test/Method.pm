@@ -90,7 +90,8 @@ The purpose of L<Test::Method> is to provide an easy way of testing methods
 without writing a test name which ultimately could equate to Object, method
 name, arguments, expected return. Ultimately I found my test names suffered
 from lack of appropriate details simply due to lack of desire for repetitive
-typing. This should mostly help reduce this.
+typing. This should mostly help reduce this. The ultimate goal of this module
+is to make testing methods on objects easier and less repetive.
 
 We're using L<Test::Deep> under the hood so you may use it's comparison
 functions in place of expected.
