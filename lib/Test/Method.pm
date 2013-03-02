@@ -77,7 +77,7 @@ sub _get_printable_value {
 
 	my $obj = Class->new; # blessed reference
 
-	method_ok( $obj, 'method', [] 'value' ); # Class->method() is value
+	method_ok( $obj, 'method', [], 'value' ); # Class->method() is value
 
 	method_ok( $obj, 'method', undef, 'value' ); # Class->method() is value
 
