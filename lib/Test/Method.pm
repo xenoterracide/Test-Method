@@ -86,7 +86,7 @@ sub _get_printable_value {
 =head1 DESCRIPTION
 
 The purpose of L<Test::Method> is to provide an easy way of testing methods
-without writing a testname which ultimately could equat to Object, method
+without writing a test name which ultimately could equate to Object, method
 name, arguments, expected return. Ultimately I found my test names suffered
-from lack of appropriate details simply due to lack of desire for repetetive
+from lack of appropriate details simply due to lack of desire for repetitive
 typing. This should mostly help reduce this.
