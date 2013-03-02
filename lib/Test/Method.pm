@@ -77,11 +77,12 @@ sub _get_printable_value {
 
 	my $obj = Class->new; # blessed reference
 
-	method_ok( $obj, 'method', [] 'value' ); # Class->method()
+	method_ok( $obj, 'method', [] 'value' ); # Class->method() is value
 
-	method_ok( $obj, 'method', undef, 'value' ); # Class->method()
+	method_ok( $obj, 'method', undef, 'value' ); # Class->method() is value
 
 	method_ok( $obj, 'method', ['arg1', 'arg2'], 'expected', 'testname' );
+	# testname Class->method(...) is 'expected'
 
 =head1 DESCRIPTION
 
@@ -90,3 +91,13 @@ without writing a test name which ultimately could equate to Object, method
 name, arguments, expected return. Ultimately I found my test names suffered
 from lack of appropriate details simply due to lack of desire for repetitive
 typing. This should mostly help reduce this.
+
+We're using L<Test::Deep> under the hood so you may use it's comparison
+functions in place of expected.
+
+=func method_ok
+
+	method_ok( $obj, 'method', \@method_args, 'expected', 'testname' );
+
+use for testing a single method in an object, if not passing args use undef or
+an empty arrayref will work.
