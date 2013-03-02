@@ -76,10 +76,14 @@ sub _get_printable_value {
 
 	method_ok( $obj, 'method', [] 'value' ); # Class->method()
 
+	method_ok( $obj, 'method', undef, 'value' ); # Class->method()
+
 	method_ok( $obj, 'method', ['arg1', 'arg2'], 'expected', 'testname' );
 
 =head1 DESCRIPTION
 
 The purpose of L<Test::Method> is to provide an easy way of testing methods
 without writing a testname which ultimately could equat to Object, method
-name, arguments, expected return.
+name, arguments, expected return. Ultimately I found my test names suffered
+from lack of appropriate details simply due to lack of desire for repetetive
+typing. This should mostly help reduce this.
