@@ -91,7 +91,7 @@ methods without writing a test name which could equate to Object, method
 name, arguments, expected return. I found my test names suffered from lack of
 appropriate details simply due to lack of desire for repetitive typing. This
 module should help reduce this. The ultimate goal of this module is to make
-testing methods on objects easier and less repetive.
+testing methods on objects easier and less repetitive.
 
 We're using L<Test::Deep> under the hood so you may use it's comparison
 functions in place of expected.
@@ -103,6 +103,6 @@ functions in place of expected.
 use for testing a single method in an object, if not passing args use undef or
 an empty arrayref will work. Unlike most testing modules specifying test name
 will not replace all of the default test name, instead it is simply prepended.
-This feature was desireable due to some object names not really being obvious
+This feature was desirable due to some object names not really being obvious
 as to what I was looking at, so it allows me to give a hint to the parent
 object or maybe a grander purpose.
