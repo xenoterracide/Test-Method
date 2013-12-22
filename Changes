@@ -1,5 +1,9 @@
-Revision history for Test-SubRoutine
+Revision history for {{$dist->name}}
+
 {{$NEXT}}
+
+0.001002  2013-12-22
+	- update for Compile Tests hangin on windows
 
 0.001001  2013-03-05
 	- remove unused dependencies
